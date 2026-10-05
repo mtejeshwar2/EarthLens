@@ -1,0 +1,49 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+@import 'tailwindcss';
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-border: var(--border);
+  --color-earth: var(--earth);
+  
+  --font-sans: 'Inter', sans-serif;
+}
+
+:root {
+  /* Warm off-white / cream backgrounds */
+  --background: #fdfbf7;
+  /* Dark charcoal text */
+  --foreground: #2d3748;
+  
+  /* Cards */
+  --card: #ffffff;
+  --card-foreground: #2d3748;
+  
+  /* Deep forest green */
+  --primary: #1a4d2e;
+  --primary-foreground: #ffffff;
+  
+  /* Light natural green accents */
+  --muted: #e8f0e5;
+  --muted-foreground: #4a5568;
+  
+  /* Subtle earth/brown accents */
+  --earth: #8b5a2b;
+  --accent: #4f772d;
+  
+  --border: #e2e8f0;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--background);
+  color: var(--foreground);
+}

@@ -1,0 +1,10 @@
+{
+  "description": "Analyze hyperspectral soil data to estimate nitrogen, phosphorus, and potassium levels, providing clear nutrient insights for informed soil management.",
+  "robots": {
+    "index": false
+  },
+  "accessibility": {
+    "addBypassLinks": false,
+    "ignoreReducedMotion": false
+  }
+}
