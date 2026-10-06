@@ -421,9 +421,9 @@ function ResultsPage({ result, preview, selectedFile, onNewSample }) {
   const average = (target) => Number(summary[target]?.mean ?? 0);
   const format = (value) => Number(value).toLocaleString(undefined, { maximumFractionDigits: 2 });
   const nutrientCards = [
-    { key: 'N', title: 'Nitrogen', description: 'Average model estimate across uploaded samples.' },
-    { key: 'P', title: 'Phosphorus', description: 'Average model estimate across uploaded samples.' },
-    { key: 'K', title: 'Potassium', description: 'Average model estimate across uploaded samples.' },
+    { key: 'N', title: 'Nitrogen (N)', description: 'Model prediction from hyperspectral reflectance data.' },
+    { key: 'P', title: 'Phosphorus (P)', description: 'Model prediction from hyperspectral reflectance data.' },
+    { key: 'K', title: 'Potassium (K)', description: 'Model prediction from hyperspectral reflectance data.' },
   ];
   const firstSpectrum = preview?.preview?.[0] || {};
   const spectralData = (preview?.feature_columns || []).map((column) => {
@@ -474,11 +474,13 @@ function ResultsPage({ result, preview, selectedFile, onNewSample }) {
         </div>
       </div>
 
-      <div className="grid md:grid-cols-3 gap-6 mb-12">
+      <div className="grid md:grid-cols-3 gap-6">
         {nutrientCards.map(({ key, title }) => <ResultCard key={key} title={title} symbol={key}
-          value={format(average(key))} unit={units[key] || 'mg/kg'} count={sampleCount}
-          min={format(summary[key]?.min ?? average(key))} max={format(summary[key]?.max ?? average(key))} />)}
+          value={format(average(key))} unit={units[key] || 'mg/kg'} />)}
       </div>
+      <p className="mt-4 mb-12 text-sm text-muted-foreground">
+        <strong>Note:</strong> Predictions are estimated from hyperspectral reflectance data using the trained N-P-K model. Accuracy for this sample cannot be determined without laboratory-measured N, P, and K values.
+      </p>
 
       <div className="grid lg:grid-cols-3 gap-8 mb-12">
         <div className="lg:col-span-2">
@@ -560,21 +562,21 @@ function ResultsPage({ result, preview, selectedFile, onNewSample }) {
           <DetailCard 
             title="Nitrogen (N)" 
             value={`${format(average('N'))} ${units.N || 'mg/kg'}`}
-            status={`${format(summary.N?.min ?? average('N'))}–${format(summary.N?.max ?? average('N'))} range`}
+            status="Model prediction"
             statusClass="text-muted-foreground"
             desc={nutrientCards[0].description}
           />
           <DetailCard 
             title="Phosphorus (P)" 
             value={`${format(average('P'))} ${units.P || 'mg/kg'}`}
-            status={`${format(summary.P?.min ?? average('P'))}–${format(summary.P?.max ?? average('P'))} range`}
+            status="Model prediction"
             statusClass="text-muted-foreground"
             desc={nutrientCards[1].description}
           />
           <DetailCard 
             title="Potassium (K)" 
             value={`${format(average('K'))} ${units.K || 'mg/kg'}`}
-            status={`${format(summary.K?.min ?? average('K'))}–${format(summary.K?.max ?? average('K'))} range`}
+            status="Model prediction"
             statusClass="text-muted-foreground"
             desc={nutrientCards[2].description}
           />
@@ -597,7 +599,7 @@ function ResultsPage({ result, preview, selectedFile, onNewSample }) {
   );
 }
 
-function ResultCard({ title, symbol, value, unit, count, min, max }) {
+function ResultCard({ title, symbol, value, unit }) {
   return (
     <div className="bg-card border border-border p-6 rounded-3xl shadow-sm hover:shadow-md transition-shadow relative overflow-hidden">
       <div className="flex justify-between items-start mb-8">
@@ -609,11 +611,9 @@ function ResultCard({ title, symbol, value, unit, count, min, max }) {
           </div>
         </div>
         <div className="px-3 py-1 rounded-full border border-primary/20 bg-primary/5 text-xs font-bold text-primary">
-          Model estimate
+          Model prediction
         </div>
       </div>
-      <p className="text-sm text-muted-foreground">Mean across {count.toLocaleString()} sample{count === 1 ? '' : 's'}</p>
-      <p className="mt-2 text-xs text-muted-foreground">Range: {min}–{max} {unit}</p>
       
       <div className="absolute -right-6 -bottom-6 text-[120px] font-black text-muted opacity-20 pointer-events-none select-none">
         {symbol}
